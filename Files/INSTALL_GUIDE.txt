@@ -1,0 +1,207 @@
+# ================================================================
+# Multi-Factor Optimal Routing — TFT Framework
+# NIT Karnataka, Surathkal
+#
+# VERIFIED INSTALL GUIDE
+# Tested on: Python 3.10, Windows 11, NVIDIA RTX 4000 Ada (CUDA 12.1)
+# All versions confirmed working together with zero conflicts.
+#
+# Run every block in EXACT ORDER shown below.
+# Do NOT combine blocks — wait for each to finish first.
+# ================================================================
+
+
+# ----------------------------------------------------------------
+# PREREQUISITES (do this once on a fresh machine)
+# ----------------------------------------------------------------
+# 1. Install Python 3.10 from https://www.python.org/downloads/
+#    During install: CHECK "Add Python to PATH"
+#
+# 2. Install CUDA 12.1 toolkit from:
+#    https://developer.nvidia.com/cuda-12-1-0-download-archive
+#
+# 3. Install VS Code from https://code.visualstudio.com/
+#    Extensions to install inside VS Code:
+#      - Python (ms-python)
+#      - Jupyter
+# ----------------------------------------------------------------
+
+
+# ================================================================
+# STEP 1 — Create and activate virtual environment
+# ================================================================
+
+# Run in PowerShell inside your project folder (e.g. C:\User_Name):
+#
+#   python -m venv .venv
+#   Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+#   .\.venv\Scripts\Activate.ps1
+#   python -m pip install --upgrade pip
+#
+# You should see (.venv) at the start of your prompt before continuing.
+
+
+# ================================================================
+# STEP 2 — Core numeric stack
+# Install FIRST before anything else to anchor versions.
+# ================================================================
+
+pip install "numpy==1.26.4"
+pip install "pandas==2.1.4"
+pip install "scipy==1.15.3"
+pip install "scikit-learn==1.4.0"
+pip install "pyarrow==14.0.1"
+
+
+# ================================================================
+# STEP 3 — PyTorch with CUDA 12.1
+# Must be installed BEFORE pytorch-lightning and torch-geometric.
+# ================================================================
+
+pip install torch==2.1.2+cu121 torchvision==0.16.2+cu121 torchaudio==2.1.2+cu121 --index-url https://download.pytorch.org/whl/cu121
+
+
+# Verify GPU is detected before continuing:
+# python -c "import torch; print(torch.__version__); print(torch.cuda.is_available()); print(torch.cuda.get_device_name(0))"
+# Expected output:
+#   2.1.2+cu121
+#   True
+#   NVIDIA RTX 4000 Ada Generation
+
+
+# ================================================================
+# STEP 4 — PyTorch Lightning (training loop framework)
+# ================================================================
+
+pip install "pytorch-lightning==2.1.4"
+
+
+# ================================================================
+# STEP 5 — PyTorch Geometric (GNN / GraphSAGE)
+# ================================================================
+
+pip install "torch-geometric==2.4.0"
+
+
+# ================================================================
+# STEP 6 — Causal inference (Stage 3)
+# Install together to resolve shared dependencies correctly.
+# ================================================================
+
+pip install "dowhy==0.11"
+pip install "econml==0.15.0"
+
+
+# ================================================================
+# STEP 7 — Graph and routing (Stage 4)
+# ================================================================
+
+pip install "osmnx==1.9.0"
+pip install "networkx==3.2"
+
+
+# ================================================================
+# STEP 8 — Dashboard and visualisation (Stage 5)
+# Install streamlit-folium BEFORE folium to let pip pick
+# a compatible folium version automatically.
+# ================================================================
+
+pip install "streamlit==1.30.0"
+pip install "plotly==5.18.0"
+pip install "streamlit-folium==0.18.0"
+pip install folium
+
+
+# ================================================================
+# STEP 9 — ML utilities and plotting
+# ================================================================
+
+pip install "optuna==3.5.0"
+pip install "matplotlib==3.8.0"
+pip install "seaborn==0.13.2"
+pip install "tqdm==4.67.3"
+
+
+# ================================================================
+# STEP 10 — Final verification
+# Run this entire block as one command to confirm all packages
+# are present and at the correct versions.
+# ================================================================
+
+# python -c "
+# import torch, numpy, pandas, scipy, sklearn, pyarrow
+# import pytorch_lightning, torch_geometric
+# import dowhy, osmnx, networkx
+# import streamlit, plotly, optuna
+# import matplotlib, seaborn, tqdm
+# print('torch            :', torch.__version__)
+# print('cuda available   :', torch.cuda.is_available())
+# print('gpu              :', torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'N/A')
+# print('numpy            :', numpy.__version__)
+# print('pandas           :', pandas.__version__)
+# print('scipy            :', scipy.__version__)
+# print('scikit-learn     :', sklearn.__version__)
+# print('pyarrow          :', pyarrow.__version__)
+# print('pytorch-lightning:', pytorch_lightning.__version__)
+# print('torch-geometric  :', torch_geometric.__version__)
+# print('dowhy            :', dowhy.__version__)
+# print('osmnx            :', osmnx.__version__)
+# print('networkx         :', networkx.__version__)
+# print('streamlit        :', streamlit.__version__)
+# print('plotly           :', plotly.__version__)
+# print('optuna           :', optuna.__version__)
+# print('matplotlib       :', matplotlib.__version__)
+# print('seaborn          :', seaborn.__version__)
+# print('ALL OK')
+# "
+
+
+# ================================================================
+# EXPECTED OUTPUT FROM VERIFICATION
+# ================================================================
+#
+# torch            : 2.1.2+cu121
+# cuda available   : True
+# gpu              : NVIDIA RTX 4000 Ada Generation
+# numpy            : 1.26.4
+# pandas           : 2.1.4
+# scipy            : 1.15.3
+# scikit-learn     : 1.4.0
+# pyarrow          : 14.0.1
+# pytorch-lightning: 2.1.4
+# torch-geometric  : 2.4.0
+# dowhy            : 0.11
+# osmnx            : 1.9.0
+# networkx         : 3.2
+# streamlit        : 1.30.0
+# plotly           : 5.18.0
+# optuna           : 3.5.0
+# matplotlib       : 3.8.0
+# seaborn          : 0.13.2
+# ALL OK
+
+
+# ================================================================
+# IMPORTANT NOTES
+# ================================================================
+#
+# 1. NEVER run: pip install -r requirements.txt
+#    Always install in the exact order above.
+#    Package resolvers pull in incompatible versions when
+#    given everything at once.
+#
+# 2. If torch gets downgraded by any subsequent install, fix with:
+#    pip install torch==2.1.2+cu121 --index-url https://download.pytorch.org/whl/cu121 --force-reinstall --no-deps
+#
+# 3. If numpy gets upgraded above 1.26.4 by any install, fix with:
+#    pip install "numpy==1.26.4" --force-reinstall
+#
+# 4. Do NOT install any of these — they conflict with our stack:
+#    - neuralforecast   (pulls incompatible torch + numpy)
+#    - darts            (pulls numpy>=2.2, pandas>=2.2, sklearn>=1.6)
+#    - pytorch-forecasting (built for torch<2.0)
+#
+# 5. The expandable_segments UserWarning during GPU operations
+#    is harmless on Windows — safe to ignore.
+#
+# ================================================================

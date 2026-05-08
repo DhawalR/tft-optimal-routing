@@ -1,0 +1,53 @@
+# ─────────────────────────────────────────────────────────────
+# Multi-Factor Optimal Routing — TFT Framework
+# NIT Karnataka
+#
+# Install with:
+#   pip install -r requirements.txt
+#
+# GPU note: if you want torch with CUDA 12.x (RTX 4000 Ada):
+#   pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+#   (run this BEFORE pip install -r requirements.txt)
+# ─────────────────────────────────────────────────────────────
+
+# ── core data ──
+numpy>=1.24
+pandas>=2.0
+scipy>=1.11
+pyarrow>=14.0          # parquet read/write
+
+# ── deep learning ──
+torch>=2.1             # install manually with CUDA wheel first (see above)
+pytorch-lightning>=2.1
+torchmetrics>=1.2
+
+# ── TFT ──
+pytorch-forecasting>=1.0
+
+# ── GNN ──
+torch-geometric>=2.4
+# optional speedups for torch-geometric (install separately after torch):
+# pip install pyg-lib torch-scatter torch-sparse -f https://data.pyg.org/whl/torch-2.1.0+cu121.html
+
+# ── causal inference (Stage 3) ──
+dowhy>=0.11
+econml>=0.15
+
+# ── graph / routing (Stage 4) ──
+osmnx>=1.9
+networkx>=3.2
+
+# ── visualisation / dashboard (Stage 5) ──
+streamlit>=1.30
+plotly>=5.18
+folium>=0.15
+streamlit-folium>=0.18
+
+# ── ML utilities ──
+scikit-learn>=1.4
+optuna>=3.5            # hyperparameter tuning
+
+# ── misc ──
+tqdm>=4.66
+matplotlib>=3.8
+seaborn>=0.13

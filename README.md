@@ -9,7 +9,7 @@ A research framework for emergency vehicle routing in Bangalore using a Temporal
 
 ## Overview
 
-Emergency vehicles (ambulances, fire trucks) need routes that balance multiple competing objectives simultaneously:
+Emergency vehicles need routes that balance multiple competing objectives simultaneously:
 
 | Symbol | Objective | Source |
 |--------|-----------|--------|
@@ -31,9 +31,11 @@ Default: α=0.40, β=0.20, γ=0.25, δ=0.15
 ## Pipeline
 
 ```
-stage1_preprocess.py   →   stage2_dataset.py / stage2_gnn.py / stage2_train.py
-       ↓                                    ↓
-stage3_causal.py        ←───────────────────┘
+stage1_preprocess.py 
+       ↓
+stage2_dataset.py / stage2_gnn.py / stage2_train.py
+       ↓                                 
+stage3_causal.py       
        ↓
 stage4_routing.py   →   stage4_map.py / stage4_maps.py / stage4_evaluate.py
        ↓
@@ -44,7 +46,7 @@ stage5_dashboard.py
 Merges five heterogeneous datasets into a single 5-minute time-series frame:
 - **Bangalore Traffic Dataset** (backbone, 8936 rows × 18 cols)
 - **Urban Flood Dataset** → composite flood risk score per lat/lon
-- **RideSafety Dataset** (Mumbai/Delhi) → domain-adapted to Bangalore via percentile matching
+- **RideSafety Dataset** → domain-adapted to Bangalore via percentile matching
 - **Air Pollution India** → daily PM2.5 lookup for Bangalore
 - **Festival Calendar India** → one-hot festival flags (known future inputs for TFT)
 
@@ -102,7 +104,7 @@ streamlit run stage5_dashboard.py
 ### Requirements
 
 ```bash
-# GPU (recommended — RTX 4000 Ada / CUDA 12.x)
+# GPU (used — RTX 4000 Ada / CUDA 12.x)
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
 
 # All other dependencies
@@ -129,7 +131,7 @@ Place all raw CSVs in your data directory (configured as `DATA_DIR` in each stag
 |------|-------------|
 | `Bangalore_Traffic_Dataset.csv` | Backbone traffic data — speed, congestion, incidents |
 | `Bangalore_Urban_Flood_Dataset.csv` | Flood risk per road segment |
-| `RideSafety_Dataset.csv` | Incident/safety data from Mumbai/Delhi (domain-adapted) |
+| `RideSafety_Dataset.csv` | Incident/safety data |
 | `Air_Pollution_India.csv` | City-level daily PM2.5 readings |
 | `Festival_Calendar_India.csv` | Indian festival dates with traffic impact categories |
 

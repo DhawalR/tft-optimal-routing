@@ -164,15 +164,19 @@ TFT Project/
 ├── stage3_causal.py         # DoWhy causal ATE estimation
 ├── stage3_evaluate.py       # Stage 3 evaluation & plots
 ├── stage4_routing.py        # Pareto-optimal routing engine
-├── stage4_map.py            # Route map generator
-├── stage4_maps.py           # Batch map utilities
+├── stage4_maps.py            # Route map generator
 ├── stage4_evaluate.py       # Stage 4 evaluation & plots
 ├── stage5_dashboard.py      # Streamlit dashboard
 ├── Files/
 │   ├── requirements.txt
 │   └── INSTALL_GUIDE.txt
-└── Datasets/
-    └── *.csv                # Raw datasets (not tracked by git)
+└── Datasets/                # Raw datasets 
+       ├──Air_Pollution_India.csv
+       ├──Bangalore_Traffic_Dataset.csv
+       ├──Bangalore_Urban_Flood_Dataset.csv
+       ├──Bangalore_traffic_Dataset_wo_cors.csv
+       ├──Festival_Calendar_India.csv
+       └──RideSafety_Dataset.csv               
 ```
 
 ---
